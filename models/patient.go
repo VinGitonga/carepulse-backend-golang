@@ -12,7 +12,7 @@ const (
 )
 
 type Patient struct {
-	Dob                             time.Time          `gorm:"type:datetime"`
+	Dob                             time.Time          `gorm:"type:date"`
 	Gender                          string             `json:"gender"`
 	Address                         string             `json:"address"`
 	Occupation                      *string            `json:"occupation"`
