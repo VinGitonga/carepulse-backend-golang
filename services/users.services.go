@@ -13,7 +13,7 @@ func CreateAdminUser(userData *dto.UserCreateAdminDTO) (*models.User, error) {
 	// confirm if user with same email exists
 	userExists := &models.User{}
 
-	if err := database.DB.Where("email = ?", userData.Email).First(userExists).Error; err != nil {
+	if err := database.DB.Db.Where("email = ?", userData.Email).First(userExists).Error; err != nil {
 		return nil, err
 	}
 
@@ -28,7 +28,7 @@ func CreateAdminUser(userData *dto.UserCreateAdminDTO) (*models.User, error) {
 		PhoneNo: sql.NullString{String: phoneNo, Valid: phoneNo != ""},
 	}
 
-	if err := database.DB.Create(user).Error; err != nil {
+	if err := database.DB.Db.Create(user).Error; err != nil {
 		return nil, err
 	}
 
@@ -39,7 +39,7 @@ func CreateAdminUser(userData *dto.UserCreateAdminDTO) (*models.User, error) {
 func GetUser(id string) (*models.User, error) {
 	user := &models.User{}
 
-	if err := database.DB.Where("id = ?", id).First(user).Error; err != nil {
+	if err := database.DB.Db.Where("id = ?", id).First(user).Error; err != nil {
 		return nil, err
 	}
 
@@ -49,7 +49,7 @@ func GetUser(id string) (*models.User, error) {
 func GetAllUsers() ([]models.User, error) {
 	var users []models.User
 
-	if err := database.DB.Find(&users).Error; err != nil {
+	if err := database.DB.Db.Find(&users).Error; err != nil {
 		return nil, err
 	}
 
@@ -59,7 +59,7 @@ func GetAllUsers() ([]models.User, error) {
 func CreatePatientAccount(userData *dto.UserCreateAdminDTO, patientData *dto.PatientCreateDto) (*models.User, error) {
 	userExists := &models.User{}
 
-	if err := database.DB.Where("email = ?", userData.Email).First(userExists).Error; err != nil {
+	if err := database.DB.Db.Where("email = ?", userData.Email).First(userExists).Error; err != nil {
 		return nil, err
 	}
 
@@ -74,7 +74,7 @@ func CreatePatientAccount(userData *dto.UserCreateAdminDTO, patientData *dto.Pat
 		PhoneNo: sql.NullString{String: phoneNo, Valid: phoneNo != ""},
 	}
 
-	if err := database.DB.Create(user).Error; err != nil {
+	if err := database.DB.Db.Create(user).Error; err != nil {
 		return nil, err
 	}
 
@@ -101,7 +101,7 @@ func CreatePatientAccount(userData *dto.UserCreateAdminDTO, patientData *dto.Pat
 		UserID:                          &user.ID,
 	}
 
-	if err := database.DB.Create(patient).Error; err != nil {
+	if err := database.DB.Db.Create(patient).Error; err != nil {
 		return nil, err
 	}
 

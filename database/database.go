@@ -2,4 +2,8 @@ package database
 
 import "gorm.io/gorm"
 
-var DB *gorm.DB
+type DbInstance struct {
+	Db *gorm.DB
+}
+
+var DB DbInstance

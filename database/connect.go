@@ -24,7 +24,7 @@ func ConnectDB() {
 		"host=%s, port=%d user=%s password=%s dbname=%s sslmode=disable", config.Config("DB_HOST"), port, config.Config("DB_USER"), config.Config("DB_PASSWORD"), config.Config("DB_NAME"),
 	)
 
-	DB, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		panic("Failed to connect to DB")
@@ -33,9 +33,12 @@ func ConnectDB() {
 	fmt.Println("Successfully connected to DB")
 
 	// Add automigrate
-	err = DB.AutoMigrate(&models.User{}, &models.Patient{})
+	err = db.AutoMigrate(&models.User{}, &models.Patient{})
 	if err != nil {
 		fmt.Println("Failed to migrate DB")
+	} else {
+		fmt.Println("Successfully Auto Migrated the Database")
+		DB = DbInstance{Db: db}
 	}
-	fmt.Println("Successfully Auto Migrated the Database")
+
 }
